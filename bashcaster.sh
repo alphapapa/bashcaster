@@ -104,8 +104,6 @@ function set_to_screen_dimensions {
 # t=$(echo $extents | cut -d ',' -f 3)  # height of title bar
 # bb=$(echo $extents | cut -d ',' -f 4) # height of bottom border
 
-# MAYBE: Function to get screen size, if needed.
-
 # ** Utility
 
 function debug {
