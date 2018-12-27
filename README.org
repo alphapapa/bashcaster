@@ -21,6 +21,26 @@ Bashcaster only works on X-based GUIs.  It should work on any Linux distro.  Wit
 +  =yad= shows the stop-icon tray notification and confirmation dialogs.
 +  =gifsicle= optionally optimizes GIFs.
 
+* Examples
+
+Record a window to a GIF:
+
+#+BEGIN_SRC sh
+  bashcaster --window output.gif
+#+END_SRC
+
+Record a window to a GIF at 15 frames per second, without the mouse cursor, optimize it, and don't show confirmation prompts:
+
+#+BEGIN_SRC sh
+  bashcaster -coy --window -f 15 output.gif
+#+END_SRC
+
+Record the whole screen to an MKV at 60 fps immediately, without confirmation:
+
+#+BEGIN_SRC sh
+  bashcaster -f 60 -y output.mkv
+#+END_SRC
+
 * Usage
 
 =bashcaster.sh [OPTIONS] OUTPUT-FILE=
@@ -49,26 +69,6 @@ Click the stop-icon tray notification to stop recording.
 
 +  =-h=, =--height= =NUMBER= :: Video height
 +  =-w=, =--width=  =NUMBER= :: Video width
-
-** Examples
-
-Record a window to a GIF:
-
-#+BEGIN_SRC sh
-  bashcaster --window output.gif
-#+END_SRC
-
-Record a window to a GIF at 15 frames per second, without the mouse cursor, optimize it, and don't show confirmation prompts:
-
-#+BEGIN_SRC sh
-  bashcaster -coy --window -f 15 output.gif
-#+END_SRC
-
-Record the whole screen to an MKV at 60 fps immediately, without confirmation:
-
-#+BEGIN_SRC sh
-  bashcaster -f 60 -y output.mkv
-#+END_SRC
 
 * Credits
 
