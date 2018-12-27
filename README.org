@@ -14,7 +14,7 @@ Put =bashcaster.sh= wherever you want.
 
 ** Requirements
 
-Bashcaster only works on X-based GUIs.  It should work on any Linux distro.  With some work it could probably work on other systems.
+Bashcaster only works on X-based GUIs.  It should work on any Linux distro, and all common ones should have these tools available for installation:
 
 +  =ffmpeg= does all the work behind the scenes.
 +  =xprop= and =xwininfo= are used to retrieve screen and window dimensions.
