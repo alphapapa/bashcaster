@@ -1,0 +1,71 @@
+#+TITLE: Bashcaster
+#+PROPERTY: LOGGING nil
+
+# Note: This readme works with the org-make-toc <https://github.com/alphapapa/org-make-toc> package, which automatically updates the table of contents.
+
+Bashcaster is a simple script that uses =ffmpeg= to record screencasts to videos or GIFs.  It can record the whole screen or a window.  It can optionally optimize GIFs with =gifsicle=.
+
+* Installation
+:PROPERTIES:
+:TOC:      0
+:END: 
+
+Put =bashcaster.sh= wherever you want.
+
+** Requirements
+
+Bashcaster only works on X-based GUIs.  It should work on any Linux distro.  With some work it could probably work on other systems.
+
++  =ffmpeg= does all the work behind the scenes.
++  =xwininfo= is used to retrieve window dimensions.
++  =yad= shows the stop-icon tray notification and confirmation dialogs.
++  =gifsicle= optionally optimizes GIFs.
+
+* Usage
+
+=bashcaster.sh [OPTIONS] OUTPUT-FILE=
+
+=OUTPUT-FILE= should end with the desired video type's extension, e.g. =.mp4= or =.gif=.
+
+Click the stop-icon tray notification to stop recording.
+
+*Options*
++  =-d=, =--debug=  Print debug info
++  =-h=, =--help=   I need somebody!
++ =--force=   Overwrite output file if it exists
++ =--window=  Select and record a window rather than the whole screen
+
++  =-c=, =--no-cursor=   Don't record mouse cursor
++ =-o=, =--optimize=    Optimize GIF with gifsicle
++ =-y=, =--no-confirm=  Don't ask for confirmation before recording
+
++ =-f=, =--framerate= =NUMBER=  Video framerate (default: 30)
+
++ =-l=, =--left= =NUMBER=  Video left edge position (default: 0)
++ =-t=, =--top=  =NUMBER=  Video top edge position (default: 0)
+
++ =-h=, =--height= =NUMBER=  Video height
++ =-w=, =--width=  =NUMBER=  Video width
+
+* Credits
+
++  Inspired by [[https://github.com/colinkeenan/silentcast][Silentcast]].
++  [[https://www.ffmpeg.org/][FFmpeg]] does all the work.
++  [[https://sourceforge.net/projects/yad-dialog/][YAD]] shows dialogs and the stop button.
++  Giphy posted a helpful [[https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/][guide]] showing how to record optimized GIFs with FFmpeg.
+
+* Development
+
+Bug reports, feature requests, suggestions — /oh my/!
+
+* License
+
+GPLv3
+
+# Local Variables:
+# eval: (require 'org-make-toc)
+# before-save-hook: org-make-toc
+# org-export-with-properties: ()
+# org-export-with-title: t
+# End:
+

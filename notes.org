@@ -1,0 +1,14 @@
+
+* Resources
+
+** [[https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/][GIPHY Engineering | » How to make GIFs with FFMPEG » How to make GIFs with FFMPEG]] :ATTACH:
+:PROPERTIES:
+:Attachments: https%3A%2F%2Fengineering.giphy.com%2Fhow-to-make-gifs-with-ffmpeg%2F--VAU19d.tar.xz
+:ID:       d32a7682-4786-450c-8e70-ce24b6d47644
+:END:
+
+** [[http://www.imagemagick.org/discourse-server/viewtopic.php?t=18320][{SOLVED} reading multiple images over standard input - ImageMagick]] :ATTACH:
+:PROPERTIES:
+:Attachments: http%3A%2F%2Fwww.imagemagick.org%2Fdiscourse-server%2Fviewtopic.php%3Ft%3D18320--2fLqbB.tar.xz
+:ID:       ca0ae861-5b1f-4d3c-9945-935c5062c4f2
+:END:
