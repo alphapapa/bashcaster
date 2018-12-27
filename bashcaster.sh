@@ -241,7 +241,7 @@ fi
 
 # ** Check output file
 
-# Concat filename.
+# Set filename.
 output_file="$rest"
 
 # Ensure file doesn't exist.
