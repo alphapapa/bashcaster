@@ -32,20 +32,40 @@ Click the stop-icon tray notification to stop recording.
 *Options*
 +  =-d=, =--debug=  Print debug info
 +  =-h=, =--help=   I need somebody!
-+ =--force=   Overwrite output file if it exists
-+ =--window=  Select and record a window rather than the whole screen
++  =--force=   Overwrite output file if it exists
++  =--window=  Select and record a window rather than the whole screen
 
 +  =-c=, =--no-cursor=   Don't record mouse cursor
-+ =-o=, =--optimize=    Optimize GIF with gifsicle
-+ =-y=, =--no-confirm=  Don't ask for confirmation before recording
++  =-o=, =--optimize=    Optimize GIF with gifsicle
++  =-y=, =--no-confirm=  Don't ask for confirmation before recording
 
-+ =-f=, =--framerate= =NUMBER=  Video framerate (default: 30)
++  =-f=, =--framerate= =NUMBER=  Video framerate (default: 30)
 
-+ =-l=, =--left= =NUMBER=  Video left edge position (default: 0)
-+ =-t=, =--top=  =NUMBER=  Video top edge position (default: 0)
++  =-l=, =--left= =NUMBER=  Video left edge position (default: 0)
++  =-t=, =--top=  =NUMBER=  Video top edge position (default: 0)
 
-+ =-h=, =--height= =NUMBER=  Video height
-+ =-w=, =--width=  =NUMBER=  Video width
++  =-h=, =--height= =NUMBER=  Video height
++  =-w=, =--width=  =NUMBER=  Video width
+
+** Examples
+
+Record a window to a GIF:
+
+#+BEGIN_SRC sh
+  bashcaster --window output.gif
+#+END_SRC
+
+Record a window to a GIF at 15 frames per second, without the mouse cursor, optimize it, and don't show confirmation prompts:
+
+#+BEGIN_SRC sh
+  bashcaster -coy --window -f 15 output.gif
+#+END_SRC
+
+Record a window to an MKV  at 60 fps:
+
+#+BEGIN_SRC sh
+  bashcaster -f 60 --window output.mkv
+#+END_SRC
 
 * Credits
 
