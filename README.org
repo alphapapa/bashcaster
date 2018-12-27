@@ -17,7 +17,7 @@ Put =bashcaster.sh= wherever you want.
 Bashcaster only works on X-based GUIs.  It should work on any Linux distro.  With some work it could probably work on other systems.
 
 +  =ffmpeg= does all the work behind the scenes.
-+  =xwininfo= is used to retrieve window dimensions.
++  =xprop= and =xwininfo= are used to retrieve screen and window dimensions.
 +  =yad= shows the stop-icon tray notification and confirmation dialogs.
 +  =gifsicle= optionally optimizes GIFs.
 
@@ -30,22 +30,25 @@ Bashcaster only works on X-based GUIs.  It should work on any Linux distro.  Wit
 Click the stop-icon tray notification to stop recording.
 
 *Options*
-+  =-d=, =--debug=  Print debug info
-+  =-h=, =--help=   I need somebody!
-+  =--force=   Overwrite output file if it exists
-+  =--window=  Select and record a window rather than the whole screen
++  =-d=, =--debug= :: Print debug info
++  =-h=, =--help= :: I need somebody!
 
-+  =-c=, =--no-cursor=   Don't record mouse cursor
-+  =-o=, =--optimize=    Optimize GIF with gifsicle
-+  =-y=, =--no-confirm=  Don't ask for confirmation before recording
++  =--force= :: Overwrite output file if it exists
 
-+  =-f=, =--framerate= =NUMBER=  Video framerate (default: 30)
++  =-F=, =--fullscreen= :: Record the whole screen (currently the default anyway)
++  =-W=, =--window= :: Select and record a window rather than the whole screen
 
-+  =-l=, =--left= =NUMBER=  Video left edge position (default: 0)
-+  =-t=, =--top=  =NUMBER=  Video top edge position (default: 0)
++  =-c=, =--no-cursor= :: Don't record mouse cursor
++  =-o=, =--optimize= :: Optimize GIF with gifsicle
++  =-y=, =--no-confirm= :: Don't ask for confirmation before recording
 
-+  =-h=, =--height= =NUMBER=  Video height
-+  =-w=, =--width=  =NUMBER=  Video width
++  =-f=, =--framerate= =NUMBER= :: Video framerate (default: =30=)
+
++  =-l=, =--left= =NUMBER= :: Video left edge position (default: =0=)
++  =-t=, =--top=  =NUMBER= :: Video top edge position (default: =0=)
+
++  =-h=, =--height= =NUMBER= :: Video height
++  =-w=, =--width=  =NUMBER= :: Video width
 
 ** Examples
 
@@ -61,10 +64,10 @@ Record a window to a GIF at 15 frames per second, without the mouse cursor, opti
   bashcaster -coy --window -f 15 output.gif
 #+END_SRC
 
-Record a window to an MKV  at 60 fps:
+Record the whole screen to an MKV at 60 fps immediately, without confirmation:
 
 #+BEGIN_SRC sh
-  bashcaster -f 60 --window output.mkv
+  bashcaster -f 60 -y output.mkv
 #+END_SRC
 
 * Credits

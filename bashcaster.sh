@@ -85,6 +85,18 @@ function set_to_window_dimensions {
     [[ $window_dimensions =~ "Height:"[[:space:]]+([[:digit:]]+) ]] && height=${BASH_REMATCH[1]}
 }
 
+function set_to_screen_dimensions {
+    local screen_dimensions=$(xprop -root _NET_DESKTOP_GEOMETRY)
+
+    if [[ $screen_dimensions =~ "_NET_DESKTOP_GEOMETRY(CARDINAL) = "([[:digit:]]+)", "([[:digit:]]+) ]]
+    then
+        width=${BASH_REMATCH[1]}
+        height=${BASH_REMATCH[2]}
+    else
+        die "Unable to get screen dimensions from xprop."
+    fi
+}
+
 # TODO: Function to get frame extents.  Like:
 # extents=$(xprop _NET_FRAME_EXTENTS -id "$aw" | grep "NET_FRAME_EXTENTS" | cut -d '=' -f 2 | tr -d ' ')
 # bl=$(echo $extents | cut -d ',' -f 1) # width of left border
@@ -135,7 +147,9 @@ Options
   -h, --help   I need somebody!
 
   --force   Overwrite output file if it exists
-  --window  Select and record a window rather than the whole screen
+
+  -F, --fullscreen  Record the whole screen (currently the default anyway)
+  -W, --window      Select and record a window rather than the whole screen
 
   -c, --no-cursor   Don't record mouse cursor
   -o, --optimize    Optimize GIF with gifsicle
@@ -153,7 +167,7 @@ EOF
 
 # * Args
 
-args=$(getopt -n "$0" -o cdf:h:now:y -l debug,framerate:,force,height:,help,no-confirm,no-cursor,optimize,width:,window -- "$@") || { usage; exit 1; }
+args=$(getopt -n "$0" -o cdf:Fh:now:Wy -l debug,framerate:,force,fullscreen,height:,help,no-confirm,no-cursor,optimize,width:,window -- "$@") || { usage; exit 1; }
 eval set -- "$args"
 
 while true
@@ -168,6 +182,9 @@ do
         -f|--framerate)
             shift
             framerate="$1"
+            ;;
+        -F|--fullscreen)
+            target="fullscreen"
             ;;
         --force)
             force=true
@@ -188,7 +205,7 @@ do
             shift
             width="$1"
             ;;
-        --window)
+        -W|--window)
             target="window"
             ;;
         -y|--no-confirm)
@@ -213,7 +230,7 @@ message="${rest[@]}"
 
 # ** Check for requirements
 
-for program in ffmpeg xwininfo yad
+for program in ffmpeg xprop xwininfo yad
 do
     check_program $program
 done
@@ -241,6 +258,9 @@ fi
 # ** Prepare window data
 
 case $target in
+    fullscreen)
+        set_to_screen_dimensions
+        ;;
     window)
         set_to_window_dimensions
         ;;
