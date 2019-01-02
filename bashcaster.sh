@@ -6,7 +6,7 @@
 
 # * Defaults
 
-cursor=1
+cursor=0
 framerate=30
 target=fullscreen
 output_file=bashcaster.mp4
@@ -16,8 +16,8 @@ force=
 
 left=0
 top=0
-width=0
-height=0
+width=
+height=
 
 # * Functions
 
@@ -67,7 +67,7 @@ function convert_to_gif {
     # Convert video file ($1) to GIF file ($2, which should end in ".gif").
 
     ffmpeg -i "$1" \
-           -filter_complex "[0:v] split [a][b];[a] palettegen [p];[b][p] paletteuse" \
+           -filter_complex "[0:v] mpdecimate,split [a][b];[a] palettegen${max_colors} [p];[b][p] paletteuse${dither}" \
            "$2"
 }
 
@@ -87,8 +87,8 @@ function set_to_screen_dimensions {
 
     if [[ $screen_dimensions =~ "_NET_DESKTOP_GEOMETRY(CARDINAL) = "([[:digit:]]+)", "([[:digit:]]+) ]]
     then
-        width=${BASH_REMATCH[1]}
-        height=${BASH_REMATCH[2]}
+        [[ $width ]] || width=${BASH_REMATCH[1]}
+        [[ $height ]] || height=${BASH_REMATCH[2]}
     else
         die "Unable to get screen dimensions from xprop."
     fi
@@ -138,80 +138,82 @@ e.g. ".mp4" or ".gif".
 Click the stop-icon tray notification to stop recording.
 
 Options
-  -d, --debug  Print debug info
-  -h, --help   I need somebody!
+  --debug  Print debug info
+  --help   I need somebody!
 
-  --force   Overwrite output file if it exists
-
-  -F, --fullscreen  Record the whole screen (currently the default anyway)
-  -W, --window      Select and record a window rather than the whole screen
-
-  -c, --no-cursor   Don't record mouse cursor
-  -o, --optimize    Optimize GIF with gifsicle
+  --force           Overwrite output file if it exists
   -y, --no-confirm  Don't ask for confirmation before recording
+
+  -c, --cursor      Record mouse cursor
+  -F, --fullscreen  Record the whole screen (the default)
+  -W, --window      Select and record a window
 
   -f, --framerate NUMBER  Video framerate (default: 30)
 
-  -l, --left NUMBER  Video left edge position (default: 0)
-  -t, --top  NUMBER  Video top edge position (default: 0)
-
+  -l, --left   NUMBER  Video left edge position (default: 0)
+  -t, --top    NUMBER  Video top edge position (default: 0)
   -h, --height NUMBER  Video height
   -w, --width  NUMBER  Video width
+
+  --max-colors NUMBER  Limit colors in palette
+  -d, --dither         Enable dithering to reduce filesize
+  -o, --optimize       Optimize GIF with gifsicle
 EOF
 }
 
 # * Args
 
-args=$(getopt -n "$0" -o cdf:Fh:now:Wy -l debug,framerate:,force,fullscreen,height:,help,no-confirm,no-cursor,optimize,width:,window -- "$@") || { usage; exit 1; }
+args=$(getopt -n "$0" -o cd:f:Fh:l:not:w:Wy -l cursor,debug,dither,framerate:,force,fullscreen,height:,help,left:,max-colors:,no-confirm,optimize,top:,width:,window -- "$@") \
+    || { usage; exit 1; }
 eval set -- "$args"
 
 while true
 do
     case "$1" in
-        -c|--no-cursor)
-            cursor=0
-            ;;
-        -d|--debug)
-            debug=true
-            ;;
+        -c|--cursor)
+            cursor=1 ;;
+        --debug)
+            debug=true ;;
+        -d|--dither)
+            # MAYBE: Make method and/or number configurable.
+            dither="=dither=bayer:bayer_scale=5" ;;
         -f|--framerate)
             shift
-            framerate="$1"
-            ;;
+            framerate="$1" ;;
         -F|--fullscreen)
-            target="fullscreen"
-            ;;
+            target="fullscreen" ;;
         --force)
-            force=true
-            ;;
+            force=true ;;
         --help)
             usage
-            exit
-            ;;
+            exit ;;
         -h|--height)
             shift
-            height="$1"
-            ;;
+            height="$1" ;;
+        -l|--left)
+            shift
+            left="$1" ;;
+        --max-colors)
+            shift
+            max_colors="=max_colors=$1" ;;
         -o|--optimize)
             check_program gifsicle
-            optimize=true
-            ;;
+            optimize=true ;;
+        -t|--top)
+            shift
+            top="$1" ;;
         -w|--width)
             shift
-            width="$1"
-            ;;
+            width="$1" ;;
         -W|--window)
-            target="window"
-            ;;
+            target="window" ;;
         -y|--no-confirm)
-            unset confirm
-            ;;
+            unset confirm ;;
         --)
             # Remaining args (required; do not remove)
             shift
             rest=("$@")
-            break
-            ;;
+            break ;;
     esac
 
     shift
