@@ -83,7 +83,7 @@ Options
 +  Inspired by [[https://github.com/colinkeenan/silentcast][Silentcast]].
 +  [[https://www.ffmpeg.org/][FFmpeg]] does all the work.
 +  [[https://sourceforge.net/projects/yad-dialog/][YAD]] shows dialogs and the stop button.
-+  Giphy posted a helpful [[https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/][guide]] showing how to record optimized GIFs with FFmpeg.
++  Giphy posted a helpful [[https://engineering.giphy.com/how-to-make-gifs-with-ffmpeg/][guide]] ([[https://github.com/cyburgee/ffmpeg-guide][GitHub repo]]) showing how to record optimized GIFs with FFmpeg.
 
 * Development
 
