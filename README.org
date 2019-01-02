@@ -29,7 +29,7 @@ Record a window to a GIF:
   bashcaster --window output.gif
 #+END_SRC
 
-Record a window to a GIF at 15 frames per second, without the mouse cursor, optimize it, and don't show confirmation prompts:
+Record a window to a GIF at 15 frames per second, with the mouse cursor, optimize it, and don't show confirmation prompts:
 
 #+BEGIN_SRC sh
   bashcaster -coy --window -f 15 output.gif
