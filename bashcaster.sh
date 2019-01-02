@@ -11,8 +11,6 @@ framerate=30
 target=fullscreen
 output_file=bashcaster.mp4
 
-gif_read_duration=2.5
-
 confirm=true
 force=
 
@@ -69,7 +67,6 @@ function convert_to_gif {
     # Convert video file ($1) to GIF file ($2, which should end in ".gif").
 
     ffmpeg -i "$1" \
-           -t $gif_read_duration \
            -filter_complex "[0:v] split [a][b];[a] palettegen [p];[b][p] paletteuse" \
            "$2"
 }
