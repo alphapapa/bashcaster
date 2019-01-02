@@ -43,32 +43,40 @@ Record the whole screen to an MKV at 60 fps immediately, without confirmation:
 
 * Usage
 
-=bashcaster.sh [OPTIONS] OUTPUT-FILE=
+#+BEGIN_EXAMPLE
+bashcaster.sh [OPTIONS] OUTPUT-FILE
 
-=OUTPUT-FILE= should end with the desired video type's extension, e.g. =.mp4= or =.gif=.
+Bashcaster is a simple script that uses ffmpeg to record screencasts
+to videos or GIFs.  It can record the whole screen or a window.  It
+can optionally optimize GIFs with gifsicle.
+
+OUTPUT-FILE should end with the desired video type's extension,
+e.g. ".mp4" or ".gif".
 
 Click the stop-icon tray notification to stop recording.
 
-*Options*
-+  =-d=, =--debug= :: Print debug info
-+  =-h=, =--help= :: I need somebody!
+Options
+  --debug  Print debug info
+  --help   I need somebody!
 
-+  =--force= :: Overwrite output file if it exists
+  --force           Overwrite output file if it exists
+  -y, --no-confirm  Don't ask for confirmation before recording
 
-+  =-F=, =--fullscreen= :: Record the whole screen (currently the default anyway)
-+  =-W=, =--window= :: Select and record a window rather than the whole screen
+  -c, --cursor      Record mouse cursor
+  -F, --fullscreen  Record the whole screen (the default)
+  -W, --window      Select and record a window
 
-+  =-c=, =--no-cursor= :: Don't record mouse cursor
-+  =-o=, =--optimize= :: Optimize GIF with gifsicle
-+  =-y=, =--no-confirm= :: Don't ask for confirmation before recording
+  -f, --framerate NUMBER  Video framerate (default: 30)
 
-+  =-f=, =--framerate= =NUMBER= :: Video framerate (default: =30=)
+  -l, --left   NUMBER  Video left edge position (default: 0)
+  -t, --top    NUMBER  Video top edge position (default: 0)
+  -h, --height NUMBER  Video height
+  -w, --width  NUMBER  Video width
 
-+  =-l=, =--left= =NUMBER= :: Video left edge position (default: =0=)
-+  =-t=, =--top=  =NUMBER= :: Video top edge position (default: =0=)
-
-+  =-h=, =--height= =NUMBER= :: Video height
-+  =-w=, =--width=  =NUMBER= :: Video width
+  --max-colors NUMBER  Limit colors in palette
+  -d, --dither         Enable dithering to reduce filesize
+  -o, --optimize       Optimize GIF with gifsicle
+#+END_EXAMPLE
 
 * Credits
 
