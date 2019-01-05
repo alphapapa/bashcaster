@@ -72,7 +72,10 @@ function convert_to_gif {
 }
 
 function set_to_window_dimensions {
-    confirm "Press OK, then click the window you want to record." || die "Canceled."
+    # If set, $1 is an alternative message.
+    [[ $1 ]] && message="$1" || message="Press OK, then click the window you want to record."
+
+    confirm "$message" || die "Canceled."
 
     local window_dimensions=$(xwininfo)
 
@@ -91,6 +94,19 @@ function set_to_screen_dimensions {
         [[ $height ]] || height=${BASH_REMATCH[2]}
     else
         die "Unable to get screen dimensions from xprop."
+    fi
+}
+
+function set_with_slop {
+    check_program slop || return 1
+    read left top width height < <(slop -f '%x %y %w %h')
+}
+
+function set_rectangle {
+    if ! set_with_slop
+    then
+        echo "Unable to find slop; using fallback rectangle selection method"
+        set_to_window_dimensions "Press OK, then select the window that covers the area you want to record."
     fi
 }
 
@@ -146,6 +162,7 @@ Options
 
   -c, --cursor      Record mouse cursor
   -F, --fullscreen  Record the whole screen (the default)
+  -R, --rectangle   Select and record a rectangle
   -W, --window      Select and record a window
 
   -f, --framerate NUMBER  Video framerate (default: 30)
@@ -163,7 +180,7 @@ EOF
 
 # * Args
 
-args=$(getopt -n "$0" -o cd:f:Fh:l:not:w:Wy -l cursor,debug,dither,framerate:,force,fullscreen,height:,help,left:,max-colors:,no-confirm,optimize,top:,width:,window -- "$@") \
+args=$(getopt -n "$0" -o cd:f:Fh:l:noRt:w:Wy -l cursor,debug,dither,framerate:,force,fullscreen,height:,help,left:,max-colors:,no-confirm,optimize,rectangle,top:,width:,window -- "$@") \
     || { usage; exit 1; }
 eval set -- "$args"
 
@@ -199,6 +216,8 @@ do
         -o|--optimize)
             check_program gifsicle
             optimize=true ;;
+        -R|--rectangle)
+            target=rectangle ;;
         -t|--top)
             shift
             top="$1" ;;
@@ -256,11 +275,11 @@ fi
 
 case $target in
     fullscreen)
-        set_to_screen_dimensions
-        ;;
+        set_to_screen_dimensions ;;
     window)
-        set_to_window_dimensions
-        ;;
+        set_to_window_dimensions ;;
+    rectangle)
+        set_rectangle ;;
 esac
 
 # ** Record video

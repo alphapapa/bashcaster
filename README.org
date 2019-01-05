@@ -19,6 +19,7 @@ Bashcaster only works on X-based GUIs.  It should work on any Linux distro, and 
 +  =ffmpeg= does all the work behind the scenes.
 +  =xprop= and =xwininfo= are used to retrieve screen and window dimensions.
 +  =yad= shows the stop-icon tray notification and confirmation dialogs.
++  [[https://github.com/naelstrof/slop][slop]] is used when available to select rectangles, otherwise a fallback method is used.
 +  =gifsicle= optionally optimizes GIFs.
 
 * Examples
@@ -64,6 +65,7 @@ Options
 
   -c, --cursor      Record mouse cursor
   -F, --fullscreen  Record the whole screen (the default)
+  -R, --rectangle   Select and record a rectangle
   -W, --window      Select and record a window
 
   -f, --framerate NUMBER  Video framerate (default: 30)
