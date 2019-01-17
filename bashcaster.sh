@@ -99,7 +99,7 @@ function set_to_screen_dimensions {
 
 function set_with_slop {
     check_program slop || return 1
-    read left top width height < <(slop -f '%x %y %w %h')
+    read left top width height <<<"$(slop -f '%x %y %w %h')"
 }
 
 function set_rectangle {
